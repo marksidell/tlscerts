@@ -1,0 +1,55 @@
+#!/usr/bin/python
+
+from __future__ import print_function
+
+import boto3
+from botocore.client import Config
+import sys
+import os
+import datetime
+import pytz
+import pprint
+import subprocess
+
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))
+from config import TLSCERTS_S3FOLDER_LATEST, TLSCERTS_VARDIR
+
+
+def makePath(fn):
+    return os.path.join(TLSCERTS_VARDIR, fn)
+
+
+def getModTime(fn):
+    return datetime.datetime.fromtimestamp(
+        os.path.getmtime(makePath(fn))).replace(tzinfo=pytz.UTC)
+
+
+def updateFile(s3f):
+    did_update = False
+    fn = s3f.key.split('/')[-1]
+
+    # Ignore the folder name 'foo/bar/'
+    #
+    if fn:
+        localPath = makePath(fn)
+        body = s3f.get()['Body'].read()
+
+        if not os.path.isfile(localPath) or body != open(localPath, 'r').read():
+            print('Updating file {}'.format(localPath))
+            open(localPath, 'w').write( body)
+            did_update = True
+
+    return did_update
+
+try:
+    s3path = TLSCERTS_S3FOLDER_LATEST.split('/')
+
+    if any(
+        map(updateFile,
+            (f for f in boto3.resource('s3', config=Config(signature_version='s3v4')).Bucket(
+            s3path[0]).objects.filter(Prefix='/'.join(s3path[1:]))))):
+
+        print( subprocess.check_output(['/sbin/service', 'httpd', 'reload']))
+
+except:
+    raise

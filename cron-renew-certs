@@ -1,0 +1,3 @@
+# Renew our TLS certs 14 days before they expire
+#
+0 1 * * * root /usr/local/tlscerts/renew-certs

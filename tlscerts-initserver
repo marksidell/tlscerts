@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -ex
+
+# We don't need fullchain.pem, but installing it now prevents
+# the cron job from reloading https by downloading it later,
+# since it downloads everything in the s3 folder.
+#
+CERT_FILES="cert.pem privkey.pem chain.pem fullchain.pem"
+
+source /usr/local/tlscerts/config.py
+
+mkdir -p ${TLSCERTS_VARDIR}
+chown root:apache ${TLSCERTS_VARDIR}
+chmod 550 ${TLSCERTS_VARDIR}
+
+cd ${TLSCERTS_VARDIR}
+
+for f in $CERT_FILES; do
+	aws s3 cp s3://${TLSCERTS_S3FOLDER_LATEST}/$f $f
+	chown 0:apache $f
+	chmod 440 $f
+done

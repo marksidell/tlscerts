@@ -1,0 +1,4 @@
+# Download new TLS certs. This is run one hour after the TLS cert
+# manager generates new certs.
+#
+0 2 * * * root /usr/local/tlscerts/update-certs

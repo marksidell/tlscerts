@@ -1,0 +1,6 @@
+domains.txt
+certs/
+*.pem
+*.pyc
+config.py
+letsencrypt-config.sh

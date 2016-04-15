@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -o errexit
+
+PROGDIR=/usr/local/tlscerts
+source ${PROGDIR}/config.py
+
+function cleanup {
+	# Turn off errexit
+	set +o errexit
+	rm -fr ${TLSCERTS_VARDIR}/new/*
+}
+trap 'cleanup' EXIT
+
+echo "${TLSCERTS_DOMAINS}" > ${TLSCERTS_VARDIR}/new/domains.txt
+
+${PROGDIR}/letsencrypt.sh --cron --challenge dns-01 --force --config ${PROGDIR}/letsencrypt-config.sh
