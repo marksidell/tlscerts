@@ -11,7 +11,7 @@ The certificate and associated files are stored in an S3 bucket of your choice,
 encrypted with a KMS key. It is assumed that you have created
 the bucket and key, and have configured a key policy that
 grants IAM users or roles the necessary rights to encrypt and decrypt
-object stored in the bucket.
+objects stored in the bucket.
 
 Certificate validation is done using the dns-01 method,
 in which challenge responses are stored as DNS TXT records.
@@ -21,20 +21,20 @@ has the right to update resource records for the zone.
 
 One server acts as the certificate manager. A cron job
 on the server runs once a day. When the certificate is due
-to expire within 14 days, the job creates a new
+to expire within 14 days, the job requests a new
 certificate, with a new key pair, and uploads the certificate,
 ca chain, and private keys file to S3.
 
 Any number of other servers may be clients. A cron job
 on the clients also runs once a day, an hour after the
 manager job. When the job detects that any certificate
-file has been updated on S3, it downloads the files and
+files have been updated on S3, it downloads the files and
 restarts apache. By default, certificates are stored
 in directory `/var/secure/tlscerts`. You'll need to
 define your apache conf files accordingly.
 
-The makefile defines parameters that you must modify
-for your own environment.
+The `makefile` defines parameters that you must modify
+for your own environment. See the comments therein.
 
 To install the software on a manager server, do:
 
