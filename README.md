@@ -50,6 +50,6 @@ lukas2511 letsencrypt.sh script, which is available at github:
 
     https://github.com/lukas2511/letsencrypt.sh
 
-For your convenience, a copy of the letsencrypt.sh file
+For your convenience, a copy of the `letsencrypt.sh` file
 is included in this repository. The copy herein may be
 out of date, but it works.
