@@ -4,14 +4,23 @@ set -o errexit
 
 PROGDIR=/usr/local/tlscerts
 source ${PROGDIR}/config.py
+NEW_DIR=${TLSCERTS_VARDIR}/new
 
 function cleanup {
 	# Turn off errexit
 	set +o errexit
-	rm -fr ${TLSCERTS_VARDIR}/new/*
+	rm -fr ${NEW_DIR}/*
 }
 trap 'cleanup' EXIT
 
-echo "${TLSCERTS_DOMAINS}" > ${TLSCERTS_VARDIR}/new/domains.txt
+echo 'Generating new TLS certs...'
+
+mkdir -p ${NEW_DIR}
+chown 0:0 ${NEW_DIR}
+chmod 700 ${NEW_DIR}
+
+echo "${TLSCERTS_DOMAINS}" > ${NEW_DIR}/domains.txt
 
 ${PROGDIR}/letsencrypt.sh --cron --challenge dns-01 --force --config ${PROGDIR}/letsencrypt-config.sh
+
+echo 'Success!'

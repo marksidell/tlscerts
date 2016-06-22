@@ -4,3 +4,4 @@ certs/
 *.pyc
 config.py
 letsencrypt-config.sh
+params.mak
