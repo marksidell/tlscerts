@@ -49,7 +49,10 @@ try:
             (f for f in boto3.resource('s3', config=Config(signature_version='s3v4')).Bucket(
             s3path[0]).objects.filter(Prefix='/'.join(s3path[1:]))))):
 
-        print( subprocess.check_output(['/sbin/service', 'httpd', 'reload']))
+        print(
+            subprocess.check_output(
+                'if /sbin/service --status-all | egrep -q \'^httpd\'; then /sbin/service httpd reload; fi',
+                shell=True))
 
 except:
     raise

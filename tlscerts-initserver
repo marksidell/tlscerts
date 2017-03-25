@@ -11,13 +11,7 @@ CERT_FILES="cert.pem privkey.pem chain.pem fullchain.pem"
 source /usr/local/tlscerts/config.py
 
 mkdir -p ${TLSCERTS_VARDIR}
-chown root:apache ${TLSCERTS_VARDIR}
+chown root:${TLSCERTS_VARDIRGROUP} ${TLSCERTS_VARDIR}
 chmod 550 ${TLSCERTS_VARDIR}
 
-cd ${TLSCERTS_VARDIR}
-
-for f in $CERT_FILES; do
-	aws s3 cp s3://${TLSCERTS_S3FOLDER_LATEST}/$f $f
-	chown 0:apache $f
-	chmod 440 $f
-done
+/usr/local/tlscerts/update-certs

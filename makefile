@@ -19,6 +19,7 @@ TLSCERTS_KMSKEYID="$(SETUP_TLSCERTS_KMSKEYID)"
 TLSCERTS_VARDIR="$(VARDIR)"
 TLSCERTS_RENEWALDAYS=$(SETUP_TLSCERTS_RENEWALDAYS)
 TLSCERTS_DOMAINS="$(SETUP_TLSCERTS_HOSTNAMES)"
+TLSCERTS_VARDIRGROUP="$(SETUP_TLSCERTS_VARDIRGROUP)"
 endef
 export CONFIG_PY
 #======================================================================
@@ -55,7 +56,7 @@ install_common : all
 	chmod 550 $(PROGDIR)
 
 	mkdir -p ${VARDIR}
-	chown 0:apache ${VARDIR}
+	chown 0:${SETUP_TLSCERTS_VARDIRGROUP} ${VARDIR}
 	chmod 550 ${VARDIR}
 
 	cp -f config.py $(PROGDIR)

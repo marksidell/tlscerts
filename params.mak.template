@@ -20,7 +20,10 @@ SETUP_TLSCERTS_S3FOLDER ?= my-bucket/certs/$(SETUP_TLSCERTS_DOMAIN)
 # The ID of the KMS key used to encrypt TLS certs.
 # Replace this with your own KMS key.
 # 
-SETUP_TLSCERTS_KMSKEYID = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+SETUP_TLSCERTS_KMSKEYID ?= xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 # How many days before expiry to renew our certs
-SETUP_TLSCERTS_RENEWALDAYS = 14
+SETUP_TLSCERTS_RENEWALDAYS ?= 14
+
+# A linux group given read access to the certs directory
+SETUP_TLSCERTS_VARDIRGROUP ?= apache
