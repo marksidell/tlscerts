@@ -33,9 +33,11 @@ restarts apache. By default, certificates are stored
 in directory `/var/secure/tlscerts`. You'll need to
 define your apache conf files accordingly.
 
-Before installing the software, you must create file
+Before installing the software, you must edit file
 `params.mak`, to define parameters for your own environment.
-Do this by making a copy of `params.mak.template`.
+Alternatively, you can define environment variables
+for the settings in params.mak that must be defined,
+and call make in the context of those variables.
 See the comments therein.
 
 To install the software on a manager server, do:
