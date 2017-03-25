@@ -30,7 +30,7 @@ define LETSENCRYPT_CONFIG_SH =
 #
 BASEDIR=$(VARDIR)/new
 CHALLENGETYPE="dns-01"
-# AWS only accepts 2048 bit keys (the default os 4096)
+# AWS only accepts 2048 bit keys (the default is 4096)
 KEYSIZE="2048"
 HOOK=$(PROGDIR)/hook
 endef
