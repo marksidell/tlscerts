@@ -51,7 +51,7 @@ try:
 
         print(
             subprocess.check_output(
-                'if /sbin/service httpd status | egrep -q running; then /sbin/service httpd reload; elif /sbin/service httpd status | egrep -q stopped; then /sbin/service httpd start; fi',
+                'if /sbin/service httpd status | egrep -q running; then /sbin/service httpd reload; fi',
                 shell=True))
 
 except:

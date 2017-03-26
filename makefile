@@ -66,9 +66,9 @@ install_common : all
 
 .PHONY : install_client
 install_client : install_common
-	cp -f tlscerts-initserver /usr/local/initserver.d
-	chown 0:0 /usr/local/initserver.d/tlscerts-initserver
-	chmod 550 /usr/local/initserver.d/tlscerts-initserver
+	cp -f tlscerts-initserver /usr/local/initserver.d/01tlscerts-initserver
+	chown 0:0 /usr/local/initserver.d/01tlscerts-initserver
+	chmod 550 /usr/local/initserver.d/01tlscerts-initserver
 
 	cp -f update-certs $(PROGDIR)
 	chown 0:0 $(PROGDIR)/update-certs
