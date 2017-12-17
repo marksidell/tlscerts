@@ -1,0 +1,37 @@
+#!/usr/bin/python
+
+from __future__ import print_function
+from argparse import ArgumentParser
+import boto3
+
+def main():
+    ''' Do it
+    '''
+    parser = ArgumentParser(description='(Re) import a certificate')
+
+    parser.add_argument(
+        'arn',
+        help='The ARN of the certificate to update')
+    parser.add_argument(
+        'cert',
+        help='The certificate PEM file')
+    parser.add_argument(
+        'key',
+        help='The private key file')
+    parser.add_argument(
+        'chain',
+        help='The chain file')
+
+    args = parser.parse_args()
+
+    acm_client = boto3.client('acm')
+
+    print(
+        acm_client.import_certificate(
+            CertificateArn=args.arn,
+            Certificate=open(args.cert).read(),
+            PrivateKey=open(args.key).read(),
+            CertificateChain=open(args.chain).read()))
+
+if __name__ == "__main__":
+    main()
